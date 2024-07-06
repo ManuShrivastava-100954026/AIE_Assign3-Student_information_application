@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Student List</h1>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('add_student') }}">Add Student</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Date of Birth</th>
+                <th>Amount Due</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.student_id }}</td>
+                <td>{{ student.first_name }}</td>
+                <td>{{ student.last_name }}</td>
+                <td>{{ student.dob }}</td>
+                <td>{{ student.amount_due }}</td>
+                <td>
+                    <a href="{{ url_for('student_detail', student_id=student.student_id) }}">View</a>
+                    <a href="{{ url_for('update_student', student_id=student.student_id) }}">Edit</a>
+                    <form action="{{ url_for('delete_student', student_id=student.student_id) }}" method="post" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
